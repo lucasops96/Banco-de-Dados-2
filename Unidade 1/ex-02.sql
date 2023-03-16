@@ -7,7 +7,11 @@ from projetos p
 left join funcionarios f on f.id = p.funcionario_responsavel_id;
 
 3 - Liste os nomes dos funcionários e dos projetos pelos quais eles são responsáveis.
-O funcionário deve aparecer mesmo que não seja responsável por nenhum projeto. 
+O funcionário deve aparecer mesmo que não seja responsável por nenhum projeto.
+
+select f.nome, p.descricao
+from funcionarios f 
+left join projetos p on p.funcionario_responsavel_id = f.id;
 
 4 - Aumente em 20% o salário dos funcionários que são responsáveis por projetos. 
 
