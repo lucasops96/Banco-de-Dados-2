@@ -29,3 +29,12 @@ where f.id = p.funcionario_responsavel_id
 insert into atividadesprojetos values (3,7);
 
 6 - Reduza em 10% o salário dos funcionários dos departamentos cuja média salarial seja maior que a média salarial da empresa.
+update funcionarios f 
+set salario = salario - salario * 0.1
+from departamentos d 
+where d.id = f.departamento_id and d.id in (select d.id
+from funcionarios f
+join departamentos d on d.id = f.departamento_id
+group by d.id 
+having avg(f.salario) > (select avg(salario)
+from funcionarios));
