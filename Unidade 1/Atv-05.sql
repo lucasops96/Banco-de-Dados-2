@@ -36,4 +36,13 @@ end;
 $$;
 
 2-Execute o reajuste criado na questão 1.
+select reajuste_salario(1);
+select reajuste_salario(2);
+select reajuste_salario(3);
+select reajuste_salario(4);
 select reajuste_salario(5);
+select reajuste_salario(6);
+select reajuste_salario(7);
+
+3-Modifique a tabela Departamentos, acrescentando uma coluna chamada total_atividades (numeric). Essa coluna deve ser preenchida para todos os departamentos, contendo o número de atividades desenvolvidas, somando todos os projetos daquele departamento específico.
+alter table departamentos add column total_atividades numeric;
