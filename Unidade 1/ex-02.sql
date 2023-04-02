@@ -23,7 +23,7 @@ left join projetos p on p.funcionario_responsavel_id = f.id;
 update funcionarios f 
 set salario = salario + salario * 0.2
 from projetos p 
-where f.id = p.funcionario_responsavel_id
+where f.id = p.funcionario_responsavel_id;
 
 5 - Aloque para o projeto Gama a atividade Implantacao do produto. 
 insert into atividadesprojetos values (3,7);
