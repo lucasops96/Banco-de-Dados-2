@@ -73,23 +73,40 @@ for each row execute function atualizar_total_atividades();
 
 5-Crie uma tabela chamada Prêmios (id, funcionario_id, data, valor).
 create table Premios(
-	id Int Primary Key,
+	id SERIAL PRIMARY Key,
 	funcionario_id Int References Funcionarios (id) On Delete Set Null,
 	data Date,
 	valor Numeric(8,2)
 );
 
 6 - Crie um gatilho na tabela AtividadesProjetos, para que cada vez que uma nova linha seja inserida, caso o funcionário responsável pelo projeto tenha atingido 3 atividades, receba um prêmio de 20% do salário (inserido na tabela prêmio).
-create or replace function atualizar_total_atividades()
+create  function premio_atividades()
 returns trigger as
 $$
 declare
-	
+	func_id int;
+	total_atvs bigint;
+	salario_func numeric;
 begin
 	select p.funcionario_responsavel_id
 	from projetos p
-	where id = 1
+	where id = new.projeto_id into func_id;
+	
+	select count(atividade_id)
+	from atividadesprojetos
+	where projeto_id = new.projeto_id into total_atvs;
+	
+	if(total_atvs = 2) then 
+		select salario
+		from funcionarios
+		where id = func_id into salario_func;
+		
+		insert into premios values(func_id,null,salario_func * 0.2);
+	end if;
 	
 	return new;
 end;
 $$ language plpgsql;
+
+create trigger premio_atividades before insert on atividadesprojetos
+for each row execute function premio_atividades();
