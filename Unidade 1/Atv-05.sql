@@ -89,7 +89,7 @@ declare
 begin
 	select p.funcionario_responsavel_id
 	from projetos p
-	where id = new.projeto_id into func_id;
+	where p.id = new.projeto_id into func_id;
 	
 	select count(atividade_id)
 	from atividadesprojetos
