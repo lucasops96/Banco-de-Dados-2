@@ -85,8 +85,7 @@ returns trigger as
 $$
 declare
 	func_id int;
-	total_atvs bigint;
-	salario_func numeric;
+	total_atvs int;
 begin
 	select p.funcionario_responsavel_id
 	from projetos p
@@ -96,17 +95,17 @@ begin
 	from atividadesprojetos
 	where projeto_id = new.projeto_id into total_atvs;
 	
-	if(total_atvs = 2) then 
-		select salario
+	if(total_atvs = 3) then 
+		insert into premios(funcionario_id, "data", valor) 
+		values(func_id,now(),(select salario * 0.2
 		from funcionarios
-		where id = func_id into salario_func;
-		
-		insert into premios values(func_id,null,salario_func * 0.2);
+		where id = func_id));
 	end if;
 	
 	return new;
 end;
 $$ language plpgsql;
 
-create trigger premio_atividades before insert on atividadesprojetos
+create trigger premio_atividades after insert on atividadesprojetos
 for each row execute function premio_atividades();
+
