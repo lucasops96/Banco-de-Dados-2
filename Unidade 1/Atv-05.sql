@@ -109,3 +109,11 @@ $$ language plpgsql;
 create trigger premio_atividades after insert on atividadesprojetos
 for each row execute function premio_atividades();
 
+7 - Crie uma visão chamada Total_premios_2022, que contenha o nome do funcionário e o total em prêmios que ele tem a receber em 2022.
+
+create view total_premios_2023 as
+select f.nome , sum(p.valor) as total_premio
+from funcionarios f
+join premios p on p.funcionario_id = f.id
+where p.data between '2023-01-01' and '2024-01-01'
+group by f.nome;
