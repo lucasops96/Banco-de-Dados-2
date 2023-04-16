@@ -51,15 +51,10 @@ where d.id = subquery.id_departamento;
 create or replace function atualizar_total_atividades()
 returns trigger as
 $$
-declare
-	total_atv numeric;
 begin
-	select total_atividades
-	from departamentos d
-	join projetos p on p.id = new.projeto_id and p.departamento_id = d.id into total_atv;
 	 
 	update departamentos d
-	set total_atividades = total_atv + 1
+	set total_atividades = total_atividades + 1
 	where d.id = ( select d.id
 	from departamentos d
 	join projetos p on p.id = new.projeto_id and p.departamento_id = d.id);
@@ -68,7 +63,7 @@ begin
 end;
 $$ language plpgsql;
 
-create trigger atualizar_total_atividades before insert on atividadesprojetos
+create or replace trigger atualizar_total_atividades after insert on atividadesprojetos
 for each row execute function atualizar_total_atividades();
 
 5-Crie uma tabela chamada Prêmios (id, funcionario_id, data, valor).
