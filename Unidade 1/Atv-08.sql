@@ -58,6 +58,8 @@ from hospital
 where consultas->'medico' = '"Carlos Alberto"';
 
 5 - Faça uma consulta usando a função jsonb_array_elements_text().
+Retorna as especialidades de um determinado médico.
+
 select distinct jsonb_array_elements_text(consultas->'medico_especialidades') as especialidades
 from hospital
 where consultas->'medico' = '"Silvo Lima"';
